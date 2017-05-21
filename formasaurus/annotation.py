@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, print_function
+
 import collections
 
 from sklearn.model_selection import GroupKFold
@@ -39,7 +39,7 @@ class FormAnnotation(_FormAnnotation):
             return False
         return all(
             v != self.field_schema.na_value
-            for v in self.fields.values()
+            for v in list(self.fields.values())
         )
 
     @property
@@ -53,7 +53,7 @@ class FormAnnotation(_FormAnnotation):
         """
         if not self.fields:
             return False
-        values = self.fields.values()
+        values = list(self.fields.values())
         has_na = any(v == self.field_schema.na_value for v in values)
         has_annotated = not all(v == self.field_schema.na_value for v in values)
         return has_na and has_annotated

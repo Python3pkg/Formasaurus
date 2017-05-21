@@ -5,7 +5,7 @@ for extracting features from HTML forms.
 
 For all features X is a list of lxml <form> elements.
 """
-from __future__ import absolute_import
+
 
 import collections
 from six.moves.urllib import parse as urlparse
@@ -48,7 +48,7 @@ class FormElements(BaseFormFeatureExtractor):
             'has <input type=checkbox>': typecounts['checkbox'] > 0,
             'has <input type=email>': typecounts['email'] > 0,
 
-            '2 or 3 inputs': len(form.inputs.keys()) in {2, 3},
+            '2 or 3 inputs': len(list(form.inputs.keys())) in {2, 3},
 
             'no <input type=password>': typecounts['password'] == 0,
             'exactly one <input type=password>': typecounts['password'] == 1,
@@ -175,7 +175,7 @@ def loginform_features(form):
     """ A dict with features from loginform library """
     typecount = _get_type_counts(form)
     res = {
-        '2_or_3_inputs': len(form.inputs.keys()) in {2, 3},
+        '2_or_3_inputs': len(list(form.inputs.keys())) in {2, 3},
         'typecount_text_gt1': (typecount['text'] > 1),
         'typecount_text_0': (typecount['text'] == 0),
         'typecount_password_eq1': (typecount['password'] == 1),

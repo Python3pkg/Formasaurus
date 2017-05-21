@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import
+
 import os
 import sys
 
@@ -59,7 +59,7 @@ def inverse_mapping(dct):
     >>> inverse_mapping({'x': 5})
     {5: 'x'}
     """
-    return {v:k for k,v in dct.items()}
+    return {v:k for k,v in list(dct.items())}
 
 
 def at_root(*args):
@@ -81,7 +81,7 @@ def thresholded(dct, threshold):
     >>> thresholded(dct, 0.0) == dct
     True
     """
-    return {k: v for k, v in dct.items() if v >= threshold}
+    return {k: v for k, v in list(dct.items()) if v >= threshold}
 
 
 def download(url):

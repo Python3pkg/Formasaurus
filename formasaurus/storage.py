@@ -2,7 +2,7 @@
 """
 A module for working with annotation data storage.
 """
-from __future__ import absolute_import
+
 import os
 import json
 import copy
@@ -81,7 +81,7 @@ class Storage(object):
     def write_index(self, index):
         """ Save an index """
         index = collections.OrderedDict(sorted(index.items()))
-        for k, info in index.items():
+        for k, info in list(index.items()):
             index[k] = collections.OrderedDict()
             index[k]['url'] = info['url']
             index[k]['forms'] = info['forms']
@@ -190,7 +190,7 @@ class Storage(object):
 
         seen = set()
         for path, tree, info in trees:
-            for idx, (form, tp) in enumerate(zip(get_forms(tree), info["forms"])):
+            for idx, (form, tp) in enumerate(list(zip(get_forms(tree), info["forms"]))):
                 if simplify_form_types:
                     tp = form_schema.simplify_map.get(tp, tp)
 
@@ -209,7 +209,7 @@ class Storage(object):
                 if simplify_field_types:
                     info = copy.deepcopy(info)
                     for fields in info['visible_html_fields']:
-                        for k, v in fields.items():
+                        for k, v in list(fields.items()):
                             fields[k] = field_schema.simplify_map.get(v, v)
 
                 yield FormAnnotation(form, tp, idx, info, path,
@@ -227,7 +227,7 @@ class Storage(object):
         if index is None:
             index = self.get_index()
         sorted_items = sorted(
-            index.items(),
+            list(index.items()),
             key=lambda it: (get_domain(it[1]["url"]), it[0])
         )
         for path, info in sorted_items:
@@ -257,7 +257,7 @@ class Storage(object):
                              ascii=True, ncols=80, unit=' files'):
             fn_full = os.path.join(self.folder, fn)
             if not os.path.exists(fn_full):
-                print("\nFile not found: %r" % fn_full)
+                print(("\nFile not found: %r" % fn_full))
                 errors += 1
                 continue
 
@@ -274,27 +274,27 @@ class Storage(object):
 
             if 'visible_html_fields' not in info:
                 errors += 1
-                print("No fields data for entry {!r}".format(fn))
+                print(("No fields data for entry {!r}".format(fn)))
             else:
                 fields = info['visible_html_fields']
                 if len(fields) != len(doc.xpath('//form')):
                     errors += 1
-                    print("Invalid number of form field annotations for entry {!r}".format(fn))
+                    print(("Invalid number of form field annotations for entry {!r}".format(fn)))
                 else:
-                    for idx, (form, fields_info) in enumerate(zip(doc.xpath('//form'), fields)):
+                    for idx, (form, fields_info) in enumerate(list(zip(doc.xpath('//form'), fields))):
                         elems = get_fields_to_annotate(form)
                         names = {elem.name for elem in elems}
                         if names != set(fields_info.keys()):
                             errors += 1
-                            print("Invalid field names for form #{}, "
+                            print(("Invalid field names for form #{}, "
                                   "entry {!r}. Expected: {}, found: {}".format(
                                 idx, fn, names, set(fields_info.keys())
-                            ))
+                            )))
 
         if not errors:
             print("Status: OK")
         else:
-            print("Status: %d error(s) found" % errors)
+            print(("Status: %d error(s) found" % errors))
 
         return errors
 
@@ -324,8 +324,8 @@ class Storage(object):
         type_counts = self.get_form_type_counts(simplify=simplify)
         for shortcut, count in type_counts.most_common():
             type_name = schema.types_inv[shortcut]
-            print("%-5d %-25s (%s)" % (count, type_name, shortcut))
-        print("\nTotal form count: %d" % (sum(type_counts.values())))
+            print(("%-5d %-25s (%s)" % (count, type_name, shortcut)))
+        print(("\nTotal form count: %d" % (sum(type_counts.values()))))
 
     def generate_filename(self, url):
         """ Return a name for a new file """

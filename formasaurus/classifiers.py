@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import
+
 import os
 
 import six
@@ -126,7 +126,7 @@ class FormFieldClassifier(object):
 
     def train(self, annotations):
         """ Train FormFieldExtractor on a list of FormAnnotation objects. """
-        print("Training form type detector on %d example(s)..." % len(annotations))
+        print(("Training form type detector on %d example(s)..." % len(annotations)))
         self.form_classifier = FormClassifier(full_type_names=True)
         self.form_classifier.train(annotations)
 
@@ -289,7 +289,7 @@ class FormClassifier(object):
         return self.model.steps[-1][1].classes_
 
     def _probs2dict(self, probs, threshold):
-        return thresholded(dict(zip(self.classes, probs)), threshold)
+        return thresholded(dict(list(zip(self.classes, probs))), threshold)
 
 
 

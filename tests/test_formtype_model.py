@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, division
+
 import itertools
 
 from sklearn.metrics import accuracy_score

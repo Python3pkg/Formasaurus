@@ -24,7 +24,7 @@ To get these 'realistic' noisy form type labels we split data into 10 folds,
 and then for each fold we predict its labels using form type detector
 trained on the rest 9 folds.
 """
-from __future__ import absolute_import, division
+
 import warnings
 
 import scipy.stats
@@ -256,16 +256,16 @@ def print_classification_report(annotations, n_splits=10, model=None):
 
     all_labels = list(annotations[0].field_schema.types.keys())
     labels = sorted(set(flatten(y_pred)), key=lambda k: all_labels.index(k))
-    print(flat_classification_report(y, y_pred, digits=2,
-                                     labels=labels, target_names=labels))
+    print((flat_classification_report(y, y_pred, digits=2,
+                                     labels=labels, target_names=labels)))
 
-    print(
+    print((
         "{:0.1f}% fields are classified correctly.".format(
             flat_accuracy_score(y, y_pred) * 100
         )
-    )
-    print(
+    ))
+    print((
         "All fields are classified correctly in {:0.1f}% forms.".format(
             sequence_accuracy_score(y, y_pred) * 100
         )
-    )
+    ))

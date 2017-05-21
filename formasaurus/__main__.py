@@ -33,7 +33,7 @@ To check the storage for consistency and print some stats use
 To check the estimated quality of the default form and form fields model
 use "formasaurus evaluate" command.
 """
-from __future__ import absolute_import, print_function
+
 import sys
 from collections import Counter
 
@@ -94,7 +94,7 @@ def main():
                 print("%s %0.1f%%" % (form_tp, prob * 100), end='    ')
 
             print("\n\nField types:")
-            for field_name, probs in info['fields'].items():
+            for field_name, probs in list(info['fields'].items()):
                 print(field_name, end=':  ')
                 for field_tp, prob in Counter(probs).most_common():
                     print("%s %0.1f%%" % (field_tp, prob * 100), end='  ')

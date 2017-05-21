@@ -3,7 +3,7 @@
 This module defines which features and which classifier the default
 form type detection model uses.
 """
-from __future__ import absolute_import, division
+
 
 import numpy as np
 from sklearn.model_selection import cross_val_predict, GroupKFold
@@ -169,9 +169,9 @@ def print_classification_report(annotations, n_splits=10, model=None):
     # hack to format report nicely
     all_labels = list(annotations[0].form_schema.types.keys())
     labels = sorted(set(y_pred), key=lambda k: all_labels.index(k))
-    print(classification_report(y, y_pred, digits=2,
-                                labels=labels, target_names=labels))
+    print((classification_report(y, y_pred, digits=2,
+                                labels=labels, target_names=labels)))
 
-    print("{:0.1f}% forms are classified correctly.".format(
+    print(("{:0.1f}% forms are classified correctly.".format(
         accuracy_score(y, y_pred) * 100
-    ))
+    )))

@@ -28,9 +28,9 @@ def AddPageWidget(storage):
         html = download(url)
         path = storage.add_result(html, url, add_empty=False)
         if path is None:
-            print("No forms at ", url)
+            print(("No forms at ", url))
         else:
-            print("Added:", path, url)
+            print(("Added:", path, url))
         url_field.value = ""
 
     fetch_btn.on_click(on_submit)

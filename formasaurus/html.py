@@ -4,7 +4,7 @@ HTML processing utilities
 """
 # from doctest import Example
 try:
-    from html import escape as html_escape  # Python 3
+    from .html import escape as html_escape  # Python 3
 except ImportError:
     from cgi import escape as html_escape  # Python 2
 
